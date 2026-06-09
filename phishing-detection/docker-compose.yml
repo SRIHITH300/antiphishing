@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: phishing-detection-api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount models directory
+      - ./backend/app/models:/app/models:ro
+      # Mount data directory for database
+      - ./backend/data:/app/data
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - USE_GPU=false  # Set to true if GPU available
+      - CONFIDENCE_THRESHOLD=0.5
+      - DATABASE_URL=sqlite:////app/data/phishing_detection.db
+      - ENABLE_HASH_CACHE=true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - phishing-network
+
+  # Optional: Add nginx for production
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: phishing-nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./nginx/ssl:/etc/nginx/ssl:ro
+  #   depends_on:
+  #     - api
+  #   networks:
+  #     - phishing-network
+
+networks:
+  phishing-network:
+    driver: bridge
+
+volumes:
+  models:
+  data:

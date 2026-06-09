@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phishing Detector</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="brand">Phishing Detector</div>
+    <div id="auth-section" aria-live="polite">
+      <div id="account-bar" class="hidden">
+        <div class="account-left">
+          <button id="profile-btn" type="button" title="Profile" aria-label="Profile">👤</button>
+          <span id="account-email"></span>
+        </div>
+        <div class="account-right">
+          <button id="logout-btn" type="button" aria-label="Logout">Logout</button>
+        </div>
+      </div>
+      <div id="account-details" class="hidden">
+        <div class="detail-row">
+          <span class="label">User ID:</span>
+          <span id="account-userid">-</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Email:</span>
+          <span id="account-email-detail">-</span>
+        </div>
+      </div>
+      <div class="auth-title">Sign in to continue</div>
+      <div class="tabs">
+        <button id="tab-login" type="button" class="active">Login</button>
+        <button id="tab-register" type="button">Register</button>
+      </div>
+      <div id="login-form" class="form">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="Email" />
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Password" />
+        <button id="login-btn" type="button" aria-label="Login">Login</button>
+      </div>
+      <div id="register-form" class="form hidden">
+        <label for="register-email">Email</label>
+        <input type="email" id="register-email" placeholder="Email" />
+        <label for="register-password">Password</label>
+        <input type="password" id="register-password" placeholder="Password (min 8 chars)" />
+        <button id="register-btn" type="button" aria-label="Register">Register</button>
+      </div>
+      <div id="auth-msg" class="msg" role="status" aria-live="polite"></div>
+    </div>
+    <main id="status-section" aria-live="polite">
+      <div id="status-badge" class="badge analyzing">Analyzing</div>
+      <div id="status-desc" class="desc" role="status" aria-live="polite">Checking databases and running models</div>
+      <div id="presence-badges" class="presence"></div>
+      <div id="found-info" class="info"></div>
+      <div class="actions">
+        <button id="recheck-btn" type="button" aria-label="Recheck analysis">Recheck</button>
+        <button id="flag-btn" type="button" disabled aria-label="Flag as phishing">Flag as phishing</button>
+      </div>
+    </main>
+  </div>
+  <script src="popup.js"></script>
+</body>
+
+</html>
